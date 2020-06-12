@@ -1,0 +1,121 @@
+:root {
+
+	/* Polar Night */
+	--nord0: #2e3440;
+	--nord1: #3b4252;
+	--nord2: #434c5e;
+	--nord3: #4c566a;
+
+	/* Snow Storm */
+	--nord4: #d8dee9;
+	--nord5: #e5e9f0;
+	--nord6: #eceff4;
+
+	/* Frost */
+	--nord7: #8fbcbb;
+	--nord8: #88c0d0;
+	--nord9: #81a1c1;
+	--nord10: #5e81ac;
+
+	/* Aurora */
+	--nord11: #bf616a;
+	--nord12: #d08770;
+	--nord13: #ebcb8b;
+	--nord14: #a3be8c;
+	--nord15: #b48ead;
+	
+}
+
+body {
+	background: var(--nord0);
+	color: var(--nord4);
+	padding: 0;
+	margin: 2em;
+
+}
+
+#board {
+	width: 600px;
+	margin: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+	border: 1px solid var(--nord0);
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+	flex: 1;
+}
+
+.lane {
+	flex: 1;
+	min-width: 1em;
+	min-height: 6em;
+	display: flex;
+	padding: 5px;
+}
+
+.row:nth-child(odd) .lane:nth-child(odd),
+.row:nth-child(even) .lane:nth-child(even) {
+	background: var(--nord9);
+}
+
+.row:nth-child(odd) .lane:nth-child(even),
+.row:nth-child(even) .lane:nth-child(odd) {
+	background: var(--nord10);
+}
+
+
+.row:nth-child(odd) .lane:nth-child(odd),
+.row:nth-child(odd) .lane:nth-child(even) {
+	flex-direction: column;
+}
+
+.row:nth-child(even) .lane:nth-child(odd),
+.row:nth-child(even) .lane:nth-child(even) {
+	flex-direction: column-reverse;
+}
+
+.checker {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	margin: 5px auto;
+	cursor: pointer;
+}
+
+.checker.black {
+	background: var(--nord3);
+}
+
+.checker.white {
+	background: var(--nord4);
+}
+
+button {
+	background: var(--nord4);
+	border: 1px solid var(--nord3);
+	border-radius: 3px;
+	color: var(--nord0);
+	cursor: pointer;
+	margin: 10px 3px 0 0;
+	padding: 5px 10px;
+	
+}
+
+button:hover {
+	background: var(--nord6);
+}
+
+#dice img {
+	height: 60px;
+	width: 60px;
+	margin: 10px 10px 0 0;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Backgammon</title>
+</head>
+<body>
+
+
+<div id="board">
+
+	<div class="row">
+
+		<div class="column">
+
+			<div class="lane" data-lane="13">
+				<div class="checker black" data-color="black" data-checker="3"></div>
+				<div class="checker black" data-color="black" data-checker="4"></div>
+				<div class="checker black" data-color="black" data-checker="5"></div>
+				<div class="checker black" data-color="black" data-checker="6"></div>
+				<div class="checker black" data-color="black" data-checker="7"></div>
+			</div>
+			
+			<div class="lane" data-lane="14"></div>
+			
+			<div class="lane" data-lane="15"></div>
+			
+			<div class="lane" data-lane="16"></div>
+			
+			<div class="lane" data-lane="17">
+				<div class="checker white" data-color="white" data-checker="8"></div>
+				<div class="checker white" data-color="white" data-checker="9"></div>
+				<div class="checker white" data-color="white" data-checker="10"></div>
+			</div>
+			
+			<div class="lane" data-lane="18"></div>			
+
+		</div>
+
+		<div class="column">
+
+			<div class="lane" data-lane="19">
+				<div class="checker white" data-color="white" data-checker="11"></div>
+				<div class="checker white" data-color="white" data-checker="12"></div>
+				<div class="checker white" data-color="white" data-checker="13"></div>
+				<div class="checker white" data-color="white" data-checker="14"></div>
+				<div class="checker white" data-color="white" data-checker="15"></div>
+			</div>
+	
+			<div class="lane" data-lane="20"></div>
+	
+			<div class="lane" data-lane="21"></div>
+	
+			<div class="lane" data-lane="22"></div>
+	
+			<div class="lane" data-lane="23"></div>
+	
+			<div class="lane" data-lane="24">
+				<div class="checker black" data-color="black" data-checker="1"></div>
+				<div class="checker black" data-color="black" data-checker="2"></div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="column">
+
+			<div class="lane" data-lane="12">
+				<div class="checker white" data-color="white" data-checker="3"></div>
+				<div class="checker white" data-color="white" data-checker="4"></div>
+				<div class="checker white" data-color="white" data-checker="5"></div>
+				<div class="checker white" data-color="white" data-checker="6"></div>
+				<div class="checker white" data-color="white" data-checker="7"></div>
+			</div>
+			
+			<div class="lane" data-lane="11"></div>
+			
+			<div class="lane" data-lane="10"></div>
+			
+			<div class="lane" data-lane="9"></div>
+			
+			<div class="lane" data-lane="8">
+				<div class="checker black" data-color="black" data-checker="8"></div>
+				<div class="checker black" data-color="black" data-checker="9"></div>
+				<div class="checker black" data-color="black" data-checker="10"></div>
+			</div>
+			
+			<div class="lane" data-lane="7"></div>
+
+		</div>
+
+		<div class="column">
+
+			<div class="lane" data-lane="6">
+				<div class="checker black" data-color="black" data-checker="11"></div>
+				<div class="checker black" data-color="black" data-checker="12"></div>
+				<div class="checker black" data-color="black" data-checker="13"></div>
+				<div class="checker black" data-color="black" data-checker="14"></div>
+				<div class="checker black" data-color="black" data-checker="15"></div>
+			</div>
+			
+			<div class="lane" data-lane="5"></div>
+			
+			<div class="lane" data-lane="4"></div>
+			
+			<div class="lane" data-lane="3"></div>
+			
+			<div class="lane" data-lane="2"></div>
+			
+			<div class="lane" data-lane="1">
+				<div class="checker white" data-color="white" data-checker="1"></div>
+				<div class="checker white" data-color="white" data-checker="2"></div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<button class="roll">Roll dice</button>
+	<button class="reset">Reset</button>
+	<div id="dice"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
