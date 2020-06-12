@@ -31,7 +31,8 @@ body {
 	color: var(--nord4);
 	padding: 0;
 	margin: 2em;
-
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
 }
 
 #board {
@@ -62,6 +63,14 @@ body {
 	padding: 5px;
 }
 
+.lane::before {
+	color: var(--nord3);
+	content: attr(data-lane);
+	font-size: 13px;
+	margin: 10px auto;
+	text-align: center;
+}
+
 .row:nth-child(odd) .lane:nth-child(odd),
 .row:nth-child(even) .lane:nth-child(even) {
 	background: var(--nord9);
@@ -88,7 +97,7 @@ body {
 	width: 30px;
 	border-radius: 50%;
 	margin: 5px auto;
-	cursor: pointer;
+	/* cursor: pointer; */
 }
 
 .checker.black {
@@ -107,15 +116,20 @@ button {
 	cursor: pointer;
 	margin: 10px 3px 0 0;
 	padding: 5px 10px;
-	
 }
 
 button:hover {
 	background: var(--nord6);
 }
 
-#dice img {
-	height: 60px;
-	width: 60px;
-	margin: 10px 10px 0 0;
+#dice {
+	display: inline-block;
+	vertical-align: bottom;
+	font-size: 20px;
+}
+
+#dice small {
+	color: var(--nord9);
+	font-size: 15px;
+	vertical-align: middle;
 }
