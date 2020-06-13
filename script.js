@@ -166,6 +166,9 @@ function moveChecker( currentChecker, targetLane ) {
 	);
 	const lane = document.querySelector( `[data-lane="${ targetLane }"]` );
 
+	console.log(lane);
+	console.log(checker);
+
 	lane.appendChild( checker );
 
 	turns++;
@@ -175,10 +178,16 @@ function moveChecker( currentChecker, targetLane ) {
 function throwChecker( currentChecker, targetLane ) {
 	
 	const lane = document.querySelector( `[data-lane="${ targetLane }"]` );
+	const thrown = document.querySelector( `#thrown-${ player }` );
+
+	console.log(thrown);
+	console.log(lane);
+	console.log(lane.firstChild[0]);
 
 	while ( lane.firstChild ) {
-		lane.removeChild( lane.firstChild );
+		thrown.appendChild( lane.firstChild );		
 	}
+
 
 	return moveChecker( currentChecker, targetLane );
 
