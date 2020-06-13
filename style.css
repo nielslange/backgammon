@@ -58,7 +58,7 @@ body {
 .lane {
 	flex: 1;
 	min-width: 1em;
-	min-height: 6em;
+	min-height: 250px;
 	display: flex;
 	padding: 5px;
 }
@@ -102,10 +102,12 @@ body {
 
 .checker.black {
 	background: var(--nord3);
+	border: 1px solid var(--nord0);
 }
 
 .checker.white {
 	background: var(--nord4);
+	border: 1px solid var(--nord0);
 }
 
 button {

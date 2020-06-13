@@ -147,7 +147,7 @@ function checkMove( event, dice ) {
 	// Move checker if target lane contains only one checker of the other color
 	// and throw the other checker out.
 	if ( currentPlayer !== targetLaneColor && 1 === targetLaneCount ) {
-		return moveChecker( currentChecker, targetLane );
+		return throwChecker( currentChecker, targetLane );
 	}
 
 	// Move checker if target lane contains less than 5 checkers of own color.
@@ -160,9 +160,7 @@ function checkMove( event, dice ) {
 }
 
 function moveChecker( currentChecker, targetLane ) {
-	console.log( { currentChecker } );
-	console.log( { targetLane } );
-
+	
 	const checker = document.querySelector(
 		`[data-checker="${ currentChecker }"]`
 	);
@@ -171,6 +169,19 @@ function moveChecker( currentChecker, targetLane ) {
 	lane.appendChild( checker );
 
 	turns++;
+
+}
+
+function throwChecker( currentChecker, targetLane ) {
+	
+	const lane = document.querySelector( `[data-lane="${ targetLane }"]` );
+
+	while ( lane.firstChild ) {
+		lane.removeChild( lane.firstChild );
+	}
+
+	return moveChecker( currentChecker, targetLane );
+
 }
 
 function showCheckerMoveError() {
@@ -192,11 +203,11 @@ function getDiceHint() {
 		hint = `${ diceOne } + ${ diceOne } + ${ diceOne } + ${ diceOne }`;
 	}
 
-	return ` | <small>Hint: ${ hint }</small>`;
+	return ` &nbsp; <small>Hint: ${ hint }</small>`;
 }
 
 function getPlayerHint() {
-	return ` | <small>Player: ${ player }</small>`;
+	return ` &nbsp; <small>Player: ${ player }</small>`;
 }
 
 function getDice() {
@@ -209,7 +220,8 @@ function getDice() {
 	diceOne = Math.floor( Math.random() * 6 ) + 1;
 	diceTwo = Math.floor( Math.random() * 6 ) + 1;
 
-	// diceOne = 5;
+	diceOne = 1;
+	diceTwo = 2;
 
 	// const diceHint = getDiceHint( diceOne, diceTwo );
 	const playerHint = getPlayerHint();
