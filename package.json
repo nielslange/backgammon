@@ -1,0 +1,28 @@
+{
+  "name": "backgammon",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "GPL-2.0-or-later",
+  "keywords": [],
+  "homepage": "https://github.com/nielslange/backgammon#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nielslange/backgammon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nielslange/backgammon/issues"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^10.0.0"
+  },
+  "scripts": {
+    "check-licenses": "wp-scripts check-licenses --prod --gpl2 --ignore=abab",
+    "format:js": "wp-scripts format-js",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:md:docs": "wp-scripts lint-md-docs",
+    "lint:md:js": "wp-scripts lint-md-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json"
+  }
+}

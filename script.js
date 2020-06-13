@@ -6,20 +6,21 @@ let checker;
 let lane;
 let turns = 0;
 
-function getCurrentColor(event) {
-	return event.target.getAttribute('data-color');
+function getCurrentColor( event ) {
+	return event.target.getAttribute( 'data-color' );
 }
 
-function getCurrentChecker(event) {
-	return Number.parseInt(event.target.getAttribute('data-checker'));
+function getCurrentChecker( event ) {
+	return Number.parseInt( event.target.getAttribute( 'data-checker' ) );
 }
 
-function getCurrentLane(event) {
-	return Number.parseInt(event.target.parentElement.getAttribute('data-lane'));
+function getCurrentLane( event ) {
+	return Number.parseInt(
+		event.target.parentElement.getAttribute( 'data-lane' )
+	);
 }
 
-function getTargetLane(currentPlayer, currentLane, dice) {
-
+function getTargetLane( currentPlayer, currentLane, dice ) {
 	let targetLane;
 
 	if ( 'white' === currentPlayer ) {
@@ -27,20 +28,19 @@ function getTargetLane(currentPlayer, currentLane, dice) {
 	} else {
 		targetLane = currentLane - dice;
 	}
-	
-	return targetLane;
 
+	return targetLane;
 }
 
-function getTargetLaneCount(lane) {
-	const data = document.querySelector(`[data-lane="${lane}"]`)
-	
+function getTargetLaneCount( lane ) {
+	const data = document.querySelector( `[data-lane="${ lane }"]` );
+
 	if ( data ) return data.childElementCount;
 }
 
-function getTargetLaneColor(lane) {
-	const data = document.querySelector(`[data-lane="${lane}"]`)
-	const count = getTargetLaneCount(lane);
+function getTargetLaneColor( lane ) {
+	const data = document.querySelector( `[data-lane="${ lane }"]` );
+	const count = getTargetLaneCount( lane );
 
 	if ( count ) return data.firstElementChild.dataset.color;
 }
@@ -55,9 +55,15 @@ function swapPlayer() {
 
 function swapDices() {
 	const color = getCurrentPlayer();
-	const checkers = Array.prototype.slice.call(document.querySelectorAll('.checker'));
+	const checkers = Array.prototype.slice.call(
+		document.querySelectorAll( '.checker' )
+	);
 
-	checkers.map( checker => checker.style.cursor = color === checker.dataset.color ? 'pointer' : 'initial' );
+	checkers.map(
+		( checker ) =>
+			( checker.style.cursor =
+				color === checker.dataset.color ? 'pointer' : 'initial' )
+	);
 }
 
 function resetTurns() {
@@ -66,189 +72,198 @@ function resetTurns() {
 
 function checkDice() {
 	if ( ! diceOne || ! diceTwo ) {
-		console.error('No dice had been rolled yet!');
+		console.error( 'No dice had been rolled yet!' );
 	}
 }
 
 /**
  * Check if checker can be removed from the board.
- * 
- * If it's the turn of the white player, the checker can be removed if all 
+ *
+ * If it's the turn of the white player, the checker can be removed if all
  * checkers are located in tethe lanes 19-24. If it's the turn of the black
  * player, the checker can be removed if all checkers are located in the lanes
  * 1-6.
- * 
- * @param {String} currentPlayer The color of the current player.
- * @returns true or false depending if the checker can be removed.
+ *
+ * @param {string} currentPlayer The color of the current player.
+ * @return true or false depending if the checker can be removed.
  */
-function canRemoveChecker(currentPlayer) {
-
-	const checkers = Array.prototype.slice.call(document.querySelectorAll(`[data-color="${currentPlayer}"]`));
+function canRemoveChecker( currentPlayer ) {
+	const checkers = Array.prototype.slice.call(
+		document.querySelectorAll( `[data-color="${ currentPlayer }"]` )
+	);
 	let allowed = true;
 
-	checkers.forEach( checker => {
-
+	checkers.forEach( ( checker ) => {
 		const lane = checker.parentElement.dataset.lane;
 
-		if ( ( 'white' == currentPlayer && 19 > lane ) || ( 'black' == currentPlayer && 6 < lane ) ) {
+		if (
+			( 'white' == currentPlayer && 19 > lane ) ||
+			( 'black' == currentPlayer && 6 < lane )
+		) {
 			allowed = false;
 		}
-
 	} );
 
 	return allowed;
 }
 
-function checkMove(event, dice) {
+function checkMove( event, dice ) {
+	currentPlayer = getCurrentPlayer();
+	currentLane = getCurrentLane( event );
+	currentChecker = getCurrentChecker( event );
+	currentColor = getCurrentColor( event );
+	targetLane = getTargetLane( currentPlayer, currentLane, dice );
+	targetLaneCount = getTargetLaneCount( targetLane );
+	targetLaneColor = getTargetLaneColor( targetLane );
 
-	currentPlayer		= getCurrentPlayer();
-	currentLane			= getCurrentLane(event);
-	currentchecker	= getCurrentChecker(event);
-	currentColor		= getCurrentColor(event);
-	targetLane 			= getTargetLane(currentPlayer, currentLane, dice);
-	targetLaneCount	= getTargetLaneCount(targetLane);
-	targetLaneColor	= getTargetLaneColor(targetLane);
-
-	console.log('---------------------------- START --------------------------');
-	console.log({currentPlayer});
-	console.log({currentLane});
-	console.log({currentchecker});
-	console.log({currentColor});
-	console.log({dice});
-	console.log({targetLane});
-	console.log({targetLaneCount});
-	console.log({targetLaneColor});
-	console.log('----------------------------- END ---------------------------');
+	console.log(
+		'---------------------------- START --------------------------'
+	);
+	console.log( { currentPlayer } );
+	console.log( { currentLane } );
+	console.log( { currentChecker } );
+	console.log( { currentColor } );
+	console.log( { dice } );
+	console.log( { targetLane } );
+	console.log( { targetLaneCount } );
+	console.log( { targetLaneColor } );
+	console.log(
+		'----------------------------- END ---------------------------'
+	);
 
 	// Check if checkers can be removed.
 	if ( 0 < targetLane || 24 > targetLane ) {
 		// Move the checker if it can be removed.
-		if ( canRemoveChecker(currentPlayer) ) {
-			return moveChecker(currentchecker, targetLane);
+		if ( canRemoveChecker( currentPlayer ) ) {
+			return moveChecker( currentChecker, targetLane );
 		}
 	}
 
 	// Move checker if target lane is empty.
 	if ( ! targetLaneCount ) {
-		return moveChecker(currentchecker, targetLane);
-	} 
-	
-	// Move checker if target lane only contains one checker.
-	if ( 1 === targetLaneCount ) {
-		return moveChecker(currentchecker, targetLane);
+		return moveChecker( currentChecker, targetLane );
 	}
-	
+
+	// Move checker if target lane contains only one checker of the other color
+	// and throw the other checker out.
+	if ( currentPlayer !== targetLaneColor && 1 === targetLaneCount ) {
+		return moveChecker( currentChecker, targetLane );
+	}
+
 	// Move checker if target lane contains less than 5 checkers of own color.
 	if ( currentPlayer === targetLaneColor && 5 > targetLaneCount ) {
-		return moveChecker(currentchecker, targetLane);
+		return moveChecker( currentChecker, targetLane );
 	}
 
 	// Show error message that checker cannot be moved tio the target lane.
 	showCheckerMoveError();
-	
 }
 
-function moveChecker(currentchecker, targetLane) {
-	console.log({currentchecker});
-	console.log({targetLane});
+function moveChecker( currentChecker, targetLane ) {
+	console.log( { currentChecker } );
+	console.log( { targetLane } );
 
+	const checker = document.querySelector(
+		`[data-checker="${ currentChecker }"]`
+	);
+	const lane = document.querySelector( `[data-lane="${ targetLane }"]` );
 
-	
-	const checker = document.querySelector(`[data-checker="${currentchecker}"]`);
-	const lane = document.querySelector(`[data-lane="${targetLane}"]`);
-
-	lane.appendChild(checker);
+	lane.appendChild( checker );
 
 	turns++;
 }
 
 function showCheckerMoveError() {
-	console.error('❌ The checker cannot be moved to the wanted lane!');
+	console.error( '❌ The checker cannot be moved to the wanted lane!' );
 }
 
 function showNextPlayerError() {
-	console.error('❌ It is the turn of the next player!');
+	console.error( '❌ It is the turn of the next player!' );
 }
 
-function getDiceHint(diceOne, diceTwo) {
-
+function getDiceHint() {
 	let hint;
 
 	if ( diceOne > diceTwo ) {
-		hint = `${diceOne} + ${diceTwo}`;
+		hint = `${ diceOne } + ${ diceTwo }`;
 	} else if ( diceOne < diceTwo ) {
-		hint = `${diceTwo} + ${diceOne}`;
+		hint = `${ diceTwo } + ${ diceOne }`;
 	} else {
-		hint = `${diceOne} + ${diceOne} + ${diceOne} + ${diceOne}`;
+		hint = `${ diceOne } + ${ diceOne } + ${ diceOne } + ${ diceOne }`;
 	}
 
-	return ` | <small>Hint: ${hint}</small>`;
-
+	return ` | <small>Hint: ${ hint }</small>`;
 }
 
 function getPlayerHint() {
-	return ` | <small>Player: ${player}</small>`;
+	return ` | <small>Player: ${ player }</small>`;
 }
 
 function getDice() {
+	const dice = document.querySelector( '#dice' );
+	const faces = [ '', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣' ];
 
-	const dice = document.querySelector('#dice');
-	const faces = ['', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣'];
-	
-	diceOne = faces[Math.floor(Math.random() * 6) + 1];
-	diceTwo = faces[Math.floor(Math.random() * 6) + 1];
+	diceOne = faces[ Math.floor( Math.random() * 6 ) + 1 ];
+	diceTwo = faces[ Math.floor( Math.random() * 6 ) + 1 ];
 
-	diceOne = Math.floor(Math.random() * 6) + 1;
-	diceTwo = Math.floor(Math.random() * 6) + 1;
-	
+	diceOne = Math.floor( Math.random() * 6 ) + 1;
+	diceTwo = Math.floor( Math.random() * 6 ) + 1;
+
 	// diceOne = 5;
 
-	const diceHint = getDiceHint(diceOne, diceTwo);
+	// const diceHint = getDiceHint( diceOne, diceTwo );
 	const playerHint = getPlayerHint();
 
-	dice.innerHTML = `${diceOne} ${diceTwo} ${playerHint}`;
-
+	dice.innerHTML = `${ diceOne } ${ diceTwo } ${ playerHint }`;
 }
 
-document.addEventListener('click', function (event) {
-	
-	let currentPlayer = getCurrentPlayer();
+document.addEventListener(
+	'click',
+	function( event ) {
+		const currentPlayer = getCurrentPlayer();
 
-	if ( event.target.classList.contains( currentPlayer ) ) {	
-
-		if ( diceOne === diceTwo ) {
-
-			switch ( turns ) {
-				case 0: checkMove(event, diceOne); break;
-				case 1: checkMove(event, diceOne); break;
-				case 2: checkMove(event, diceOne); break;
-				case 3: checkMove(event, diceOne); break;
-				default: showNextPlayerError();
+		if ( event.target.classList.contains( currentPlayer ) ) {
+			if ( diceOne === diceTwo ) {
+				switch ( turns ) {
+					case 0:
+						checkMove( event, diceOne );
+						break;
+					case 1:
+						checkMove( event, diceOne );
+						break;
+					case 2:
+						checkMove( event, diceOne );
+						break;
+					case 3:
+						checkMove( event, diceOne );
+						break;
+					default:
+						showNextPlayerError();
+				}
+			} else {
+				switch ( turns ) {
+					case 0:
+						checkMove( event, diceOne );
+						break;
+					case 1:
+						checkMove( event, diceTwo );
+						break;
+					default:
+						showNextPlayerError();
+				}
 			}
-
-		} else {
-
-			switch ( turns ) {
-				case 0: checkMove(event, diceOne); break;
-				case 1: checkMove(event, diceTwo); break;
-				default: showNextPlayerError();
-			}
-
 		}
 
-	}
+		if ( event.target.classList.contains( 'roll' ) ) {
+			resetTurns();
+			swapPlayer();
+			swapDices();
+			getDice();
+		}
 
-	if ( event.target.classList.contains( 'roll' ) ) {
-
-		resetTurns();
-		swapPlayer();
-		swapDices();
-		getDice();
-		
-	}
-
-	if ( event.target.classList.contains( 'reset' ) ) {
-		location.reload();
-	}
-
-}, false);
+		if ( event.target.classList.contains( 'reset' ) ) {
+			location.reload();
+		}
+	},
+	false
+);
