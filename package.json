@@ -24,5 +24,8 @@
     "lint:md:docs": "wp-scripts lint-md-docs",
     "lint:md:js": "wp-scripts lint-md-js",
     "lint:pkg-json": "wp-scripts lint-pkg-json"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0"
   }
 }

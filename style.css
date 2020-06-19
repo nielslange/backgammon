@@ -26,34 +26,26 @@
 	
 }
 
+@media (min-width: 800px) {
+	.container{
+		max-width: 700px;
+	}
+}
+
+html {
+	height: 100%;	
+}
+
 body {
 	background: var(--nord0);
+	background: radial-gradient( var(--nord1), var(--nord0) );
 	color: var(--nord4);
-	padding: 0;
-	margin: 2em;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 20px;
+	height: 100%;
 }
 
-#board {
-	width: 600px;
-	margin: auto;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.column {
-	border: 1px solid var(--nord0);
-  display: flex;
-  flex-direction: row;
-  flex-basis: 100%;
-	flex: 1;
-}
+/* .row, .row > div {
+	border: 1px solid;
+} */
 
 .lane {
 	flex: 1;
@@ -61,7 +53,8 @@ body {
 	min-height: 250px;
 	display: flex;
 	padding: 5px;
-}
+	box-sizing: content-box;
+} 
 
 .lane::before {
 	color: var(--nord3);
@@ -71,24 +64,24 @@ body {
 	text-align: center;
 }
 
-.row:nth-child(odd) .lane:nth-child(odd),
-.row:nth-child(even) .lane:nth-child(even) {
-	background: var(--nord9);
-}
-
-.row:nth-child(odd) .lane:nth-child(even),
-.row:nth-child(even) .lane:nth-child(odd) {
+.board-top .lane:nth-child(odd),
+.board-bottom .lane:nth-child(even) {
 	background: var(--nord10);
 }
 
+.board-top .lane:nth-child(even),
+.board-bottom .lane:nth-child(odd) {
+	background: var(--nord9);
+}
 
-.row:nth-child(odd) .lane:nth-child(odd),
-.row:nth-child(odd) .lane:nth-child(even) {
+
+.board-top .lane:nth-child(odd),
+.board-top .lane:nth-child(even) {
 	flex-direction: column;
 }
 
-.row:nth-child(even) .lane:nth-child(odd),
-.row:nth-child(even) .lane:nth-child(even) {
+.board-bottom .lane:nth-child(odd),
+.board-bottom .lane:nth-child(even) {
 	flex-direction: column-reverse;
 }
 
@@ -97,7 +90,6 @@ body {
 	width: 30px;
 	border-radius: 50%;
 	margin: 5px auto;
-	/* cursor: pointer; */
 }
 
 .checker.black {
@@ -110,47 +102,22 @@ body {
 	border: 1px solid var(--nord0);
 }
 
-button {
-	background: var(--nord4);
-	border: 1px solid var(--nord3);
-	border-radius: 3px;
-	color: var(--nord0);
-	cursor: pointer;
-	margin: 10px 3px 0 0;
-	padding: 5px 10px;
-}
-
-button:hover {
-	background: var(--nord6);
-}
-
-#dice {
-	display: inline-block;
-	vertical-align: bottom;
-	font-size: 20px;
-}
-
-#dice small {
-	color: var(--nord9);
-	font-size: 15px;
-	vertical-align: middle;
-}
-
-#thrown,
-#finished {
-	margin-top: 20px;
-	display: flex;
-	flex-direction: row;
-}
-
 #thrown-white,
-#thrown-black {
-	flex: 1;
-	width: 50%;
+#thrown-black,
+#finished-white,
+#finished-black {
+	background: var(--nord1);
+	border: 1px solid var(--nord0);
+	border-radius: 3px;
+	min-height: 52px;
 }
 
 #thrown-white .checker,
-#thrown-black .checker {
-	display: inline-block;
-	margin: 0;
+#thrown-black .checker,
+#finished-white .checker,
+#finished-black .checker {
+	display: block;
+	float: left;
+	margin: 10px 0 10px 5px;
+	
 }

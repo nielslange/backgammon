@@ -3,151 +3,138 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
 	<link rel="stylesheet" href="style.css">
 	<title>Backgammon</title>
 </head>
 <body>
 
-
-<div id="board">
-
-	<div class="row">
-
-		<div class="column">
-
-			<div class="lane" data-lane="13">
-				<div class="checker black" data-color="black" data-checker="18"></div>
-				<div class="checker black" data-color="black" data-checker="19"></div>
-				<div class="checker black" data-color="black" data-checker="20"></div>
-				<div class="checker black" data-color="black" data-checker="21"></div>
-				<div class="checker black" data-color="black" data-checker="22"></div>
-			</div>
-			
-			<div class="lane" data-lane="14"></div>
-			
-			<div class="lane" data-lane="15"></div>
-			
-			<div class="lane" data-lane="16"></div>
-			
-			<div class="lane" data-lane="17">
-				<div class="checker white" data-color="white" data-checker="8"></div>
-				<div class="checker white" data-color="white" data-checker="9"></div>
-				<div class="checker white" data-color="white" data-checker="10"></div>
-			</div>
-			
-			<div class="lane" data-lane="18"></div>			
-
-		</div>
-
-		<div class="column">
-
-			<div class="lane" data-lane="19">
-				<div class="checker white" data-color="white" data-checker="11"></div>
-				<div class="checker white" data-color="white" data-checker="12"></div>
-				<div class="checker white" data-color="white" data-checker="13"></div>
-				<div class="checker white" data-color="white" data-checker="14"></div>
-				<div class="checker white" data-color="white" data-checker="15"></div>
-			</div>
-			
-			<div class="lane" data-lane="20">
-				<!-- <div class="checker white" data-color="white" data-checker="8"></div>
-				<div class="checker white" data-color="white" data-checker="9"></div>
-				<div class="checker white" data-color="white" data-checker="10"></div> -->
-			</div>
-	
-			<div class="lane" data-lane="21">
-				<!-- <div class="checker white" data-color="white" data-checker="3"></div>
-				<div class="checker white" data-color="white" data-checker="4"></div>
-				<div class="checker white" data-color="white" data-checker="5"></div>
-				<div class="checker white" data-color="white" data-checker="6"></div>
-				<div class="checker white" data-color="white" data-checker="7"></div> -->
-			</div>
-	
-			<div class="lane" data-lane="22">
-				<!-- <div class="checker white" data-color="white" data-checker="1"></div>
-				<div class="checker white" data-color="white" data-checker="2"></div> -->
-			</div>
-	
-			<div class="lane" data-lane="23"></div>
-	
-			<div class="lane" data-lane="24">
-				<div class="checker black" data-color="black" data-checker="16"></div>
-				<div class="checker black" data-color="black" data-checker="17"></div>
-			</div>
-
-		</div>
-
-	</div>
+<div class="container">
 
 	<div class="row">
-
-		<div class="column">
-
-			<div class="lane" data-lane="12">
-				<div class="checker white" data-color="white" data-checker="3"></div>
-				<div class="checker white" data-color="white" data-checker="4"></div>
-				<div class="checker white" data-color="white" data-checker="5"></div>
-				<div class="checker white" data-color="white" data-checker="6"></div>
-				<div class="checker white" data-color="white" data-checker="7"></div>
-			</div>
-			
-			<div class="lane" data-lane="11"></div>
-			
-			<div class="lane" data-lane="10"></div>
-			
-			<div class="lane" data-lane="9"></div>
-			
-			<div class="lane" data-lane="8">
-				<div class="checker black" data-color="black" data-checker="23"></div>
-				<div class="checker black" data-color="black" data-checker="24"></div>
-				<div class="checker black" data-color="black" data-checker="25"></div>
-			</div>
-			
-			<div class="lane" data-lane="7"></div>
-
+		<div class="col-12 text-center my-4">
+			Backgammon
 		</div>
-
-		<div class="column">
-
-			<div class="lane" data-lane="6">
-				<div class="checker black" data-color="black" data-checker="26"></div>
-				<div class="checker black" data-color="black" data-checker="27"></div>
-				<div class="checker black" data-color="black" data-checker="28"></div>
-			</div>
-			
-			<div class="lane" data-lane="5"></div>
-			
-			<div class="lane" data-lane="4"></div>
-			
-			<div class="lane" data-lane="3">
-				<div class="checker black" data-color="black" data-checker="29"></div>
-			</div>
-			
-			<div class="lane" data-lane="2">
-				<div class="checker black" data-color="black" data-checker="30"></div>
-			</div>
-			
-			<div class="lane" data-lane="1">
-				<div class="checker white" data-color="white" data-checker="1"></div>
-				<div class="checker white" data-color="white" data-checker="2"></div>
-			</div>
-
-		</div>
-
 	</div>
 
-	<button class="roll">Roll dice</button>
-	<button class="reset">Reset</button>
-	<span id="dice"></span>
-
-	<div id="thrown">
-		<div id="thrown-white"></div>
-		<div id="thrown-black"></div>
+	<div class="row no-gutters board-top">
+		<div class="col-1 lane" data-lane="13">
+			<div class="checker black" data-color="black" data-checker="18"></div>
+			<div class="checker black" data-color="black" data-checker="19"></div>
+			<div class="checker black" data-color="black" data-checker="20"></div>
+			<div class="checker black" data-color="black" data-checker="21"></div>
+			<div class="checker black" data-color="black" data-checker="22"></div>
+		</div>
+		<div class="col-1 lane" data-lane="14"></div>
+		<div class="col-1 lane" data-lane="15"></div>
+		<div class="col-1 lane" data-lane="16"></div>
+		<div class="col-1 lane" data-lane="17">
+			<!-- <div class="checker white" data-color="white" data-checker="8"></div>
+			<div class="checker white" data-color="white" data-checker="9"></div> -->
+			<div class="checker white" data-color="white" data-checker="10"></div>
+		</div>
+		<div class="col-1 lane" data-lane="18"></div>			
+		<div class="col-1 lane" data-lane="19">
+			<!-- <div class="checker white" data-color="white" data-checker="11"></div>
+			<div class="checker white" data-color="white" data-checker="12"></div> -->
+			<div class="checker white" data-color="white" data-checker="13"></div>
+			<div class="checker white" data-color="white" data-checker="14"></div>
+			<div class="checker white" data-color="white" data-checker="15"></div>
+		</div>
+		<div class="col-1 lane" data-lane="20">
+			<!-- <div class="checker white" data-color="white" data-checker="8"></div>
+			<div class="checker white" data-color="white" data-checker="9"></div>
+			<div class="checker white" data-color="white" data-checker="10"></div> -->
+		</div>
+		<div class="col-1 lane" data-lane="21">
+			<!-- <div class="checker white" data-color="white" data-checker="3"></div>
+			<div class="checker white" data-color="white" data-checker="4"></div>
+			<div class="checker white" data-color="white" data-checker="5"></div>
+			<div class="checker white" data-color="white" data-checker="6"></div>
+			<div class="checker white" data-color="white" data-checker="7"></div> -->
+		</div>
+		<div class="col-1 lane" data-lane="22">
+			<!-- <div class="checker white" data-color="white" data-checker="1"></div>
+			<div class="checker white" data-color="white" data-checker="2"></div> -->
+			<div class="checker black" data-color="black" data-checker="16"></div>
+			<div class="checker black" data-color="black" data-checker="17"></div>
+		</div>
+		<div class="col-1 lane" data-lane="23">
+			<div class="checker white" data-color="white" data-checker="11"></div>
+			<div class="checker white" data-color="white" data-checker="12"></div>
+		</div>
+		<div class="col-1 lane" data-lane="24">
+			<!-- <div class="checker black" data-color="black" data-checker="16"></div>
+			<div class="checker black" data-color="black" data-checker="17"></div> -->
+			<div class="checker white" data-color="white" data-checker="8"></div>
+			<div class="checker white" data-color="white" data-checker="9"></div>
+</div>
 	</div>
 
-	<div id="finished">
-		<div id="finished-white"></div>
-		<div id="finished-black"></div>
+	<div class="row no-gutters board-bottom">
+		<div class="col-1 lane" data-lane="12">
+			<div class="checker white" data-color="white" data-checker="3"></div>
+			<div class="checker white" data-color="white" data-checker="4"></div>
+			<div class="checker white" data-color="white" data-checker="5"></div>
+			<div class="checker white" data-color="white" data-checker="6"></div>
+			<div class="checker white" data-color="white" data-checker="7"></div>
+		</div>
+		<div class="col-1 lane" data-lane="11"></div>
+		<div class="col-1 lane" data-lane="10"></div>
+		<div class="col-1 lane" data-lane="9"></div>
+		<div class="col-1 lane" data-lane="8">
+			<div class="checker black" data-color="black" data-checker="23"></div>
+			<div class="checker black" data-color="black" data-checker="24"></div>
+			<div class="checker black" data-color="black" data-checker="25"></div>
+		</div>
+		<div class="col-1 lane" data-lane="7"></div>
+		<div class="col-1 lane" data-lane="6">
+			<div class="checker black" data-color="black" data-checker="26"></div>
+			<div class="checker black" data-color="black" data-checker="27"></div>
+			<div class="checker black" data-color="black" data-checker="28"></div>
+		</div>
+		<div class="col-1 lane" data-lane="5"></div>
+		<div class="col-1 lane" data-lane="4"></div>
+		<div class="col-1 lane" data-lane="3">
+			<div class="checker black" data-color="black" data-checker="29"></div>
+		</div>
+		<div class="col-1 lane" data-lane="2">
+			<div class="checker black" data-color="black" data-checker="30"></div>
+		</div>
+		<div class="col-1 lane" data-lane="1">
+			<div class="checker white" data-color="white" data-checker="1"></div>
+			<div class="checker white" data-color="white" data-checker="2"></div>
+		</div>
+	</div>
+
+	<div class="form-row my-4">
+		<div class="col-2">		
+			<button class="btn btn-primary btn-block roll">Roll dice</button>
+		</div>
+		<div class="col-2">		
+			<button class="btn btn-secondary btn-block swap">Swap dice</button>
+		</div>
+		<div class="col-2">		
+			<button class="btn btn-danger btn-block reset">Reset</button>
+		</div>
+		<div class="col-4 text-center" id="dice"></div>
+		<div class="col-2 text-center" id="player"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-12 text-center my-2" id="message"></div>
+	</div>
+
+	<div class="row no-gutters my-4">
+		<div class="col-12 text-center my-2"><p class="my-0">Thrown</p></div>
+		<div class="col-6" id="thrown-white"></div>
+		<div class="col-6" id="thrown-black"></div>
+	</div>
+
+	<div class="row no-gutters my-4">
+		<div class="col-12 text-center my-2"><p class="my-0">Finished</p></div>
+		<div class="col-6" id="finished-white"></div>
+		<div class="col-6" id="finished-black"></div>
 	</div>
 
 </div>
