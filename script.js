@@ -45,8 +45,22 @@ function getTargetLaneColor( lane ) {
 	if ( count ) return data.firstElementChild.dataset.color;
 }
 
+function getThrownCheckerCount () {
+	const data = document.querySelector(`#thrown-${player}`);
+
+	if ( data ) return data.childElementCount;
+}
+
 function getCurrentPlayer() {
 	return player;
+}
+
+function getCurrentOpponent() {
+	swapPlayer();
+	const opponent = getCurrentPlayer();
+	swapPlayer();
+
+	return opponent;
 }
 
 function swapPlayer() {
@@ -115,21 +129,27 @@ function checkMove( event, dice ) {
 	targetLane = getTargetLane( currentPlayer, currentLane, dice );
 	targetLaneCount = getTargetLaneCount( targetLane );
 	targetLaneColor = getTargetLaneColor( targetLane );
+	thrownCheckerCount = getThrownCheckerCount();
 
-	console.log(
-		'---------------------------- START --------------------------'
-	);
-	console.log( { currentPlayer } );
-	console.log( { currentLane } );
-	console.log( { currentChecker } );
-	console.log( { currentColor } );
-	console.log( { dice } );
-	console.log( { targetLane } );
-	console.log( { targetLaneCount } );
-	console.log( { targetLaneColor } );
-	console.log(
-		'----------------------------- END ---------------------------'
-	);
+	// console.log(
+	// 	'---------------------------- START --------------------------'
+	// );
+	// console.log( { currentPlayer } );
+	// console.log( { currentLane } );
+	// console.log( { currentChecker } );
+	// console.log( { currentColor } );
+	// console.log( { dice } );
+	// console.log( { targetLane } );
+	// console.log( { targetLaneCount } );
+	// console.log( { targetLaneColor } );
+	// console.log(
+	// 	'----------------------------- END ---------------------------'
+	// );
+
+	// Check if any checkers need to be brought back into the game.
+	if ( thrownCheckerCount ) {
+		return addChecker( currentChecker, dice );
+	}
 
 	// Check if checkers can be removed.
 	if ( 0 < targetLane || 24 > targetLane ) {
@@ -173,9 +193,9 @@ function moveChecker( currentChecker, targetLane ) {
 }
 
 function throwChecker( currentChecker, targetLane ) {
-	
+	const opponent = getCurrentOpponent();
 	const lane = document.querySelector( `[data-lane="${ targetLane }"]` );
-	const thrown = document.querySelector( `#thrown-${ player }` );
+	const thrown = document.querySelector( `#thrown-${ opponent }` );
 
 	while ( lane.firstChild ) {
 		thrown.appendChild( lane.firstChild );		
@@ -185,8 +205,31 @@ function throwChecker( currentChecker, targetLane ) {
 
 }
 
+function isThrownChecker ( currentChecker ) {
+	const thrown = Array.prototype.slice.call(document.querySelectorAll(`#thrown .${player}`));
+	const result = thrown.filter( checker => { return currentChecker == checker.dataset.checker });
+
+	return result.length;
+}
+
+function addChecker( currentChecker, dice ) {
+	// If current checker is on the list of thrown checkers, bring it into the game.
+	if ( isThrownChecker ( currentChecker ) ) {
+		const targetLane = 'white' === player ? 0 + dice : 25 - dice;
+		
+		return moveChecker( currentChecker, targetLane );
+	} 
+
+	// If current checker is on the list of thrown checkers, show error message.
+	showCheckerThrownError();
+}
+
 function showCheckerMoveError() {
 	console.error( '❌ The checker cannot be moved to the wanted lane!' );
+}
+
+function showCheckerThrownError() {
+	console.error( '❌ All thrown checkers need to be played first.' );
 }
 
 function showNextPlayerError() {
