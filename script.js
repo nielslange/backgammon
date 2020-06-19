@@ -197,11 +197,37 @@ function isThrownChecker( currentChecker ) {
 }
 
 function addChecker( currentChecker, dice ) {
+
+	console.log(isThrownChecker( currentChecker ));
+
 	// If current checker is on the list of thrown checkers, bring it into the game.
 	if ( isThrownChecker( currentChecker ) ) {
 		const targetLane = 'white' === player ? 0 + dice : 25 - dice;
+		targetLaneCount = getTargetLaneCount( targetLane );
+		targetLaneColor = getTargetLaneColor( targetLane );
 
-		return moveChecker( currentChecker, targetLane );
+		console.log({currentPlayer});
+		console.log({targetLaneColor});
+		console.log({targetLaneCount});
+
+		// Move checker if target lane is empty.
+		if ( ! targetLaneCount ) {
+			return moveChecker( currentChecker, targetLane );
+		}
+
+		// Move checker if target lane contains only one checker of the other color
+		// and throw the other checker out.
+		if ( currentPlayer !== targetLaneColor && 1 === targetLaneCount ) {
+			return throwChecker( currentChecker, targetLane );
+		}
+		
+		// Move checker if target lane contains less than 5 checkers of own color.
+		if ( currentPlayer === targetLaneColor && 5 > targetLaneCount ) {
+			return moveChecker( currentChecker, targetLane );
+		}
+
+		// Show error message that checker cannot be moved to the target lane.
+		return showCheckerMoveError();
 	}
 
 	// If current checker is on the list of thrown checkers, show error message.
@@ -209,9 +235,7 @@ function addChecker( currentChecker, dice ) {
 }
 
 function showCheckerMoveError() {
-	return showErrorMessage(
-		'The checker cannot be moved to the wanted lane!'
-	);
+	return showErrorMessage( 'This checker cannot be moved to the wanted lane!' );
 }
 
 function showCheckerThrownError() {
