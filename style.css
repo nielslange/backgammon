@@ -44,7 +44,8 @@ body {
 }
 
 .fa, .fas {
-	font-size: 38px;
+	font-size: 35px;
+	vertical-align: text-top;
 }
 
 /* .row, .row > div {

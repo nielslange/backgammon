@@ -5,6 +5,7 @@ let color;
 let checker;
 let lane;
 let turns = 0;
+let moves = [];
 
 function getCurrentColor( event ) {
 	return event.target.getAttribute( 'data-color' );
@@ -120,6 +121,7 @@ function canRemoveChecker( currentPlayer ) {
 }
 
 function checkMove( event, dice ) {
+
 	currentPlayer = getCurrentPlayer();
 	currentLane = getCurrentLane( event );
 	currentChecker = getCurrentChecker( event );
@@ -138,13 +140,13 @@ function checkMove( event, dice ) {
 	if ( 0 < targetLane || 24 > targetLane ) {
 		// Move the checker if it can be removed.
 		if ( canRemoveChecker( currentPlayer ) ) {
-			return moveChecker( currentChecker, targetLane );
+			return moveChecker( currentChecker, targetLane, currentLane );
 		}
 	}
 
 	// Move checker if target lane is empty.
 	if ( ! targetLaneCount ) {
-		return moveChecker( currentChecker, targetLane );
+		return moveChecker( currentChecker, targetLane, currentLane );
 	}
 
 	// Move checker if target lane contains only one checker of the other color
@@ -155,14 +157,21 @@ function checkMove( event, dice ) {
 
 	// Move checker if target lane contains less than 5 checkers of own color.
 	if ( currentPlayer === targetLaneColor && 5 > targetLaneCount ) {
-		return moveChecker( currentChecker, targetLane );
+		return moveChecker( currentChecker, targetLane, currentLane );
 	}
 
 	// Show error message that checker cannot be moved to the target lane.
 	showCheckerMoveError();
 }
 
-function moveChecker( currentChecker, targetLane ) {
+function moveChecker( currentChecker, targetLane, currentLane, undo = false ) {
+
+	const state = {
+		currentChecker: currentChecker,		
+		targetLane: targetLane,
+		currentLane: currentLane
+	}
+
 	const checker = document.querySelector(
 		`[data-checker="${ currentChecker }"]`
 	);
@@ -170,7 +179,10 @@ function moveChecker( currentChecker, targetLane ) {
 
 	lane.appendChild( checker );
 
-	turns++;
+	if ( ! undo ) {
+		moves.push(state);
+		turns++;
+	}
 }
 
 function throwChecker( currentChecker, targetLane ) {
@@ -182,7 +194,7 @@ function throwChecker( currentChecker, targetLane ) {
 		thrown.appendChild( lane.firstChild );
 	}
 
-	return moveChecker( currentChecker, targetLane );
+	return moveChecker( currentChecker, targetLane, currentLane );
 }
 
 function isThrownChecker( currentChecker ) {
@@ -211,7 +223,7 @@ function addChecker( currentChecker, dice ) {
 
 		// Move checker if target lane is empty.
 		if ( ! targetLaneCount ) {
-			return moveChecker( currentChecker, targetLane );
+			return moveChecker( currentChecker, targetLane, currentLane );
 		}
 
 		// Move checker if target lane contains only one checker of the other color
@@ -222,7 +234,7 @@ function addChecker( currentChecker, dice ) {
 
 		// Move checker if target lane contains less than 5 checkers of own color.
 		if ( currentPlayer === targetLaneColor && 5 > targetLaneCount ) {
-			return moveChecker( currentChecker, targetLane );
+			return moveChecker( currentChecker, targetLane, currentLane );
 		}
 
 		// Show error message that checker cannot be moved to the target lane.
@@ -294,8 +306,8 @@ function rollDice() {
 	diceOne = Math.floor( Math.random() * 6 ) + 1;
 	diceTwo = Math.floor( Math.random() * 6 ) + 1;
 
-	diceOne = 1;
-	diceTwo = 2;
+	// diceOne = 1;
+	// diceTwo = 2;
 
 	showDice( diceOne, diceTwo );
 }
@@ -353,6 +365,16 @@ function getStats() {
 
 	statsWhite.innerHTML = getStatsByPlayer( 'white' );
 	statsBlack.innerHTML = getStatsByPlayer( 'black' );
+}
+
+function undoMove() {
+	if ( 0 == turns ) return;
+
+	const move = moves[moves.length - 1];
+	moves.pop();
+	turns--;
+	
+	return moveChecker( move.currentChecker, move.currentLane, move.targetLane, true );
 }
 
 function getStatsByPlayer( player ) {
@@ -435,6 +457,7 @@ document.addEventListener(
 		}
 
 		if ( event.target.classList.contains( 'roll' ) ) {
+			moves = [];
 			rollDice();
 		}
 
@@ -442,11 +465,19 @@ document.addEventListener(
 			swapDice();
 		}
 
+		if ( event.target.classList.contains( 'undo' ) ) {
+			undoMove();
+		}
+
 		if ( event.target.classList.contains( 'reset' ) ) {
 			location.reload();
 		}
 
 		getStats();
+
+		console.table(turns);
+		// console.table(moves);
+
 	},
 	false
 );

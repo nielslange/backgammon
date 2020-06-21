@@ -116,9 +116,12 @@
 			<button class="btn btn-secondary btn-block swap">Swap dice</button>
 		</div>
 		<div class="col-2">		
+			<button class="btn btn-secondary btn-block undo">Undo</button>
+		</div>
+		<div class="col-2">		
 			<button class="btn btn-danger btn-block reset">Reset</button>
 		</div>
-		<div class="col-4 text-center" id="dice"></div>
+		<div class="col-2 text-center" id="dice"></div>
 		<div class="col-2 text-center" id="player"></div>
 	</div>
 
@@ -134,10 +137,7 @@
 
 	<div class="row my-4">
 		<div class="col-12 text-center my-2"><p class="my-0">Finished</p></div>
-		<div class="col-6 info finished" id="finished-white">
-			<div class="checker white" data-color="white" data-checker="1"></div>
-			<div class="checker white" data-color="white" data-checker="2"></div>
-		</div>
+		<div class="col-6 info finished" id="finished-white"></div>
 		<div class="col-6 info finished" id="finished-black"></div>
 	</div>
 
