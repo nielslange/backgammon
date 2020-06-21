@@ -43,6 +43,10 @@ body {
 	height: 100%;
 }
 
+.fa, .fas {
+	font-size: 38px;
+}
+
 /* .row, .row > div {
 	border: 1px solid;
 } */
@@ -85,6 +89,42 @@ body {
 	flex-direction: column-reverse;
 }
 
+div[data-lane="13"] {
+	border-top-left-radius: 0.25rem;
+}
+
+div[data-lane="24"] {
+	border-top-right-radius: 0.25rem;
+}
+
+div[data-lane="1"] {
+	border-bottom-right-radius: 0.25rem;
+}
+
+div[data-lane="12"] {
+	border-bottom-left-radius: 0.25rem;
+}
+
+div[data-lane="18"],
+div[data-lane="7"] {
+	border-right: 10px solid var(--nord1);
+}
+
+div[data-lane="13"],
+div[data-lane="14"],
+div[data-lane="15"],
+div[data-lane="16"],
+div[data-lane="17"],
+div[data-lane="18"],
+div[data-lane="19"],
+div[data-lane="20"],
+div[data-lane="21"],
+div[data-lane="22"],
+div[data-lane="23"],
+div[data-lane="24"] {
+	border-bottom: 10px solid var(--nord1);
+}
+
 .checker {
 	height: 30px;
 	width: 30px;
@@ -102,22 +142,16 @@ body {
 	border: 1px solid var(--nord0);
 }
 
-#thrown-white,
-#thrown-black,
-#finished-white,
-#finished-black {
+.info {
 	background: var(--nord1);
 	border: 1px solid var(--nord0);
 	border-radius: 3px;
-	min-height: 52px;
+	min-height: 62px;
+	padding: 10px;
 }
 
-#thrown-white .checker,
-#thrown-black .checker,
-#finished-white .checker,
-#finished-black .checker {
+.info .checker {
 	display: block;
 	float: left;
-	margin: 10px 0 10px 5px;
-	
+	margin-left: 5px;
 }

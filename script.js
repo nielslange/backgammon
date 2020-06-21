@@ -197,8 +197,7 @@ function isThrownChecker( currentChecker ) {
 }
 
 function addChecker( currentChecker, dice ) {
-
-	console.log(isThrownChecker( currentChecker ));
+	console.log( isThrownChecker( currentChecker ) );
 
 	// If current checker is on the list of thrown checkers, bring it into the game.
 	if ( isThrownChecker( currentChecker ) ) {
@@ -206,9 +205,9 @@ function addChecker( currentChecker, dice ) {
 		targetLaneCount = getTargetLaneCount( targetLane );
 		targetLaneColor = getTargetLaneColor( targetLane );
 
-		console.log({currentPlayer});
-		console.log({targetLaneColor});
-		console.log({targetLaneCount});
+		console.log( { currentPlayer } );
+		console.log( { targetLaneColor } );
+		console.log( { targetLaneCount } );
 
 		// Move checker if target lane is empty.
 		if ( ! targetLaneCount ) {
@@ -220,7 +219,7 @@ function addChecker( currentChecker, dice ) {
 		if ( currentPlayer !== targetLaneColor && 1 === targetLaneCount ) {
 			return throwChecker( currentChecker, targetLane );
 		}
-		
+
 		// Move checker if target lane contains less than 5 checkers of own color.
 		if ( currentPlayer === targetLaneColor && 5 > targetLaneCount ) {
 			return moveChecker( currentChecker, targetLane );
@@ -235,7 +234,9 @@ function addChecker( currentChecker, dice ) {
 }
 
 function showCheckerMoveError() {
-	return showErrorMessage( 'This checker cannot be moved to the wanted lane!' );
+	return showErrorMessage(
+		'This checker cannot be moved to the wanted lane!'
+	);
 }
 
 function showCheckerThrownError() {
@@ -290,10 +291,6 @@ function rollDice() {
 	swapPlayer();
 	swapChecker();
 
-	// const faces = [ '', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣' ];
-	// diceOne = faces[ Math.floor( Math.random() * 6 ) + 1 ];
-	// diceTwo = faces[ Math.floor( Math.random() * 6 ) + 1 ];
-
 	diceOne = Math.floor( Math.random() * 6 ) + 1;
 	diceTwo = Math.floor( Math.random() * 6 ) + 1;
 
@@ -311,13 +308,35 @@ function swapDice() {
 	showDice( diceOne, diceTwo );
 }
 
+function getDiceFace( number ) {
+	switch ( number ) {
+		case 1:
+			return '<i class="fas fa-dice-one"></i>';
+		case 2:
+			return '<i class="fas fa-dice-two"></i>';
+		case 3:
+			return '<i class="fas fa-dice-three"></i>';
+		case 4:
+			return '<i class="fas fa-dice-four"></i>';
+		case 5:
+			return '<i class="fas fa-dice-five"></i>';
+		case 6:
+			return '<i class="fas fa-dice-six"></i>';
+		default:
+			return '<i class="fas fa-exclamation-square"></i>';
+	}
+}
+
 function showDice( diceOne, diceTwo ) {
 	const dice = document.querySelector( '#dice' );
 	const player = document.querySelector( '#player' );
 	const playerHint = getPlayerHint();
 
+	const diceOneFace = getDiceFace( diceOne );
+	const diceTwoFace = getDiceFace( diceTwo );
+
 	// Display dice.
-	dice.innerHTML = `${ diceOne } | ${ diceTwo }`;
+	dice.innerHTML = `${ diceOneFace } ${ diceTwoFace }`;
 
 	// Display player.
 	player.innerHTML = `${ playerHint }`;
@@ -326,6 +345,54 @@ function showDice( diceOne, diceTwo ) {
 function resetMessage() {
 	const message = document.querySelector( '#message' );
 	message.innerText = '';
+}
+
+function getStats() {
+	const statsWhite = document.querySelector( '#stats-white' );
+	const statsBlack = document.querySelector( '#stats-black' );
+
+	statsWhite.innerHTML = getStatsByPlayer( 'white' );
+	statsBlack.innerHTML = getStatsByPlayer( 'black' );
+}
+
+function getStatsByPlayer( player ) {
+	return `
+		${ getActiveChecker( player ) } <br>
+		${ getThrownChecker( player ) } <br>
+		${ getFinishedChecker( player ) } <br>
+		${ getPipCount( player ) } <br>
+	`;
+}
+
+function getActiveChecker( player ) {
+	const count = document.querySelectorAll(`.lane .${ player }`).length;
+
+	return `Active: ${ count }`;
+}
+
+function getThrownChecker( player ) {
+	const count = document.querySelectorAll(`.thrown .${ player }`).length;
+
+	return `Thrown: ${ count }`;
+}
+
+function getFinishedChecker( player ) {
+	const count = document.querySelectorAll(`.finished .${ player }`).length;
+
+	return `Finished: ${ count }`;
+}
+
+function getPipCount( player ) {
+	const checker = document.querySelectorAll(`.lane .${ player }`);
+	let count = 0;
+	
+	checker.forEach( element => {
+		const lane = Number.parseInt(element.parentNode.dataset.lane);
+		const multiplier = 'white' === player ? 24 - lane + 1 : lane;
+		count += multiplier;
+	});
+
+	return `Pip Count: ${ count }`;
 }
 
 document.addEventListener(
@@ -378,6 +445,10 @@ document.addEventListener(
 		if ( event.target.classList.contains( 'reset' ) ) {
 			location.reload();
 		}
+
+		getStats();
 	},
 	false
 );
+
+getStats();
