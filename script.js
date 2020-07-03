@@ -100,7 +100,23 @@ function hasGameStarted() {
  * @param {string} currentPlayer The color of the current player.
  * @return true or false depending if the checker can be removed.
  */
-function canRemoveChecker( currentPlayer ) {
+function canRemoveChecker(dice) {
+
+	// white == 25
+	// black == 0
+	
+
+	if ( 'white' == currentPlayer )	{
+		console.log(currentLane + dice);
+	} else {
+		console.log(currentLane - dice);
+	}
+
+	console.log({currentLane});
+	console.log({dice});
+	console.log({currentChecker});
+	console.log({currentPlayer});
+
 	const checkers = Array.prototype.slice.call(
 		document.querySelectorAll( `[data-color="${ currentPlayer }"]` )
 	);
@@ -137,11 +153,14 @@ function checkMove( event, dice ) {
 	}
 
 	// Check if checkers can be removed.
-	if ( 0 < targetLane || 24 > targetLane ) {
+	if ( ( 0 < targetLane || 24 > targetLane ) ) {
 		// Move the checker if it can be removed.
-		if ( canRemoveChecker( currentPlayer ) ) {
-			return moveChecker( currentChecker, targetLane, currentLane );
-		}
+
+		canRemoveChecker(dice);
+
+		// if ( canRemoveChecker( currentPlayer ) ) {
+		// 	return moveChecker( currentChecker, targetLane, currentLane );
+		// }
 	}
 
 	// Move checker if target lane is empty.
@@ -209,18 +228,12 @@ function isThrownChecker( currentChecker ) {
 }
 
 function addChecker( currentChecker, dice ) {
-	console.log( isThrownChecker( currentChecker ) );
-
 	// If current checker is on the list of thrown checkers, bring it into the game.
 	if ( isThrownChecker( currentChecker ) ) {
 		const targetLane = 'white' === player ? 0 + dice : 25 - dice;
 		targetLaneCount = getTargetLaneCount( targetLane );
 		targetLaneColor = getTargetLaneColor( targetLane );
-
-		console.log( { currentPlayer } );
-		console.log( { targetLaneColor } );
-		console.log( { targetLaneCount } );
-
+		
 		// Move checker if target lane is empty.
 		if ( ! targetLaneCount ) {
 			return moveChecker( currentChecker, targetLane, currentLane );
@@ -323,19 +336,19 @@ function swapDice() {
 function getDiceFace( number ) {
 	switch ( number ) {
 		case 1:
-			return '<i class="fas fa-dice-one"></i>';
+			return '1 <i class="fas fa-dice-one"></i>';
 		case 2:
-			return '<i class="fas fa-dice-two"></i>';
+			return '2 <i class="fas fa-dice-two"></i>';
 		case 3:
-			return '<i class="fas fa-dice-three"></i>';
+			return '3 <i class="fas fa-dice-three"></i>';
 		case 4:
-			return '<i class="fas fa-dice-four"></i>';
+			return '4 <i class="fas fa-dice-four"></i>';
 		case 5:
-			return '<i class="fas fa-dice-five"></i>';
+			return '5 <i class="fas fa-dice-five"></i>';
 		case 6:
-			return '<i class="fas fa-dice-six"></i>';
+			return '6 <i class="fas fa-dice-six"></i>';
 		default:
-			return '<i class="fas fa-exclamation-square"></i>';
+			return '0 <i class="fas fa-exclamation-square"></i>';
 	}
 }
 
@@ -474,9 +487,6 @@ document.addEventListener(
 		}
 
 		getStats();
-
-		console.table(turns);
-		// console.table(moves);
 
 	},
 	false
