@@ -14,7 +14,7 @@
     "url": "https://github.com/nielslange/backgammon/issues"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^10.0.0",
+    "@wordpress/scripts": "^25.3.0",
     "bootstrap": "^4.5.0"
   },
   "scripts": {
